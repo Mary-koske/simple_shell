@@ -1,115 +1,81 @@
 #include "shell.h"
-
-int num_len(int num);
-char *_itoa(int num);
-int create_error(char **args, int err);
-
 /**
- * num_len - Counts the digit length of a number.
- * @num: The number to measure.
- *
- * Return: The digit length.
+ * print_errors - print errors of the program
+ * @array: array of comand and arguments
+ * @av: array from main
+ * @cont: count the number prompts
+ * @num: indicates the error
+ * Return: Nothing
  */
-int num_len(int num)
+void print_errors(char **array, char *av[], int cont, int num)
 {
-	unsigned int num1;
-	int len = 1;
+	int lnav, lnarray;
 
-	if (num < 0)
+	lnarray = _strlen(array[0]);
+	lnav = _strlen(av[0]);
+
+	if (num == 127 || num == 126)
 	{
-		len++;
-		num1 = num * -1;
+		write(STDOUT_FILENO, av[0], lnav);
+		write(STDOUT_FILENO, " : ", 3);
+		print_integer(cont);
+		write(STDOUT_FILENO, ": ", 2);
+		write(STDOUT_FILENO, array[0], lnarray);
+		write(STDOUT_FILENO, ": ", 2);
+		perror("");
+	}
+
+	if (num == 2)
+	{
+		write(STDOUT_FILENO, av[0], lnav);
+		write(STDOUT_FILENO, ": ", 2);
+	}
+}
+/**
+ *print_integer - call a recursion function with an iterator
+ *@n: number to print
+ *Return: lenght of the number
+ */
+int print_integer(int n)
+{
+	int i = 1;
+
+	return (recursion_int(n, i));
+}
+/**
+ *recursion_int - print
+ *@n: receive a number
+ *@cont: count the lenght of number
+ *Return: Amount of digits of the number n
+ */
+int recursion_int(int n, int cont)
+{
+	unsigned int num;
+
+	if (n < 0)
+	{
+		_putchar('-');
+		num = (-1) * n;
+		cont++;
 	}
 	else
-	{
-		num1 = num;
-	}
-	while (num1 > 9)
-	{
-		len++;
-		num1 /= 10;
-	}
+		num = n;
 
-	return (len);
+	if (num / 10)
+	{
+		cont = recursion_int(num / 10, cont = cont + 1);
+	}
+	_putchar((num % 10) + '0');
+	return (cont);
 }
-
 /**
- * _itoa - Converts an integer to a string.
- * @num: The integer.
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
  *
- * Return: The converted string.
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
  */
-char *_itoa(int num)
+int _putchar(char c)
 {
-	char *buffer;
-	int len = num_len(num);
-	unsigned int num1;
-
-	buffer = malloc(sizeof(char) * (len + 1));
-	if (!buffer)
-		return (NULL);
-
-	buffer[len] = '\0';
-
-	if (num < 0)
-	{
-		num1 = num * -1;
-		buffer[0] = '-';
-	}
-	else
-	{
-		num1 = num;
-	}
-
-	len--;
-	do {
-		buffer[len] = (num1 % 10) + '0';
-		num1 /= 10;
-		len--;
-	} while (num1 > 0);
-
-	return (buffer);
-}
-
-
-/**
- * create_error - Writes a custom error message to stderr.
- * @args: An array of arguments.
- * @err: The error value.
- *
- * Return: The error value.
- */
-int create_error(char **args, int err)
-{
-	char *error;
-
-	switch (err)
-	{
-	case -1:
-		error = error_env(args);
-		break;
-	case 1:
-		error = error_1(args);
-		break;
-	case 2:
-		if (*(args[0]) == 'e')
-			error = error_2_exit(++args);
-		else if (args[0][0] == ';' || args[0][0] == '&' || args[0][0] == '|')
-			error = error_2_syntax(args);
-		else
-			error = error_2_cd(args);
-		break;
-	case 126:
-		error = error_126(args);
-		break;
-	case 127:
-		error = error_127(args);
-		break;
-	}
-	write(STDERR_FILENO, error, _strlen(error));
-
-	if (error)
-		free(error);
-	return (err);
-
+	return (write(STDOUT_FILENO, &c, 1));
 }
