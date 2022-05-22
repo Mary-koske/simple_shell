@@ -1,66 +1,154 @@
-<h1>Simple Shell</h1>
+## SHELL PROJECT
 
-<h3>Background Context</h3>
+## Objectives
 
-<p>The Simple Shell is the creation of a UNIX command interpreter, which allows us to know in detail its execution from a system of own created functions.</p>
-<hr/>
-<h3>Learning Objectives</h3>
+#### There are three objectives to this assignment:
 
-<li>How does a shell work</li>
-<li>How does a pid and a ppid work</li>
-<li>How to manipulate the environment of the current process</li>
-<li>How to create processes</li>
-<li>How does the shell use the PATH to find the programs</li>
-<li>How to execute another program with the execve system call</li>
-<li>How to suspend the execution of a process until one of its children terminates</li>
-<li>EOF implementation / end of file </li>
-<hr/>
-<h3>Description of the files</h3>
+- To familiarize ourselves with the Linux programming environment.
 
-<p>The following table describes each file exposed in the simple shell repository</p>
+- To learn how processes are created, destroyed, and managed.
 
-| FILE | SPECIAL FEATURE |
-| :---: | --- |
-| **main_shell.c** | Main function of simple shell | 
-|**functions.c** | File containing the own functions, to be used according to the call of the main_shell |
-| **shell.h** | Header file, contains the direct declarations or function prototypes |
-| **free_function.c** | Own function, it is used to unassign the memory assigned by the functions malloc , calloc etc |
-| **getline** | It reads the command line input stored in a buffer |
-| **print_env.c** | Own function that prints the current environment |
-| **_putchar.c** | Own function, writes the character c to stdout |
-| **child.c** | Function that creates the child process |
-| **prompt.c** | Function that prints the prompt line |
-| **_atoi.c** | Convert a string to an integer |
-| **_strcmp.c** | Own function that compare two string and return cero on success |
-| **sp_string.c** | Own function that split a string with strtok function |
-| **_strcat.c** | Own function that concatenate two string |
-| **_strdup.c** | Own function that copy a string |
-| **_strlen.c** | Own function that return the length of a string |
-| **print_errors.c** | Own function that print errors of the program |
-| **print_integer.c** | call a recursion function with an iterator |
-| **recursion_int.c** | print and return amount of digits of the number n |
-| **print_env.c** | function that prints environ |
-| **free_arraybid.c** | free a array bidimentional |
-| **_isdigit.c** | Own function that checks for a digit cero through nine |
-| **manage_signal** | Own function that manage the signal CTRL + C |
-| **exit_cmd.c** | Own outputs function in the program according to the data of the array in position one |
-<hr/>
-<h3>Installation and use </h3>
+- To gain exposure to the necessary functionality in shells.
 
-<p>Clone the repository with https into a directory on your terminal </p>
+## Overview
 
-<img src="https://user-images.githubusercontent.com/55164863/79722644-09e0cc80-82aa-11ea-9e42-013915d1890f.PNG " style=" width:100px ; height:100px " />
+- In this assignment, we implemented a command line interpreter or, as it is more commonly known, a shell. The shell should operate in this basic way: when you type in a command (in response to its prompt), the shell creates a child process that executes the command you entered and then prompts for more user input when it has finished.
 
-<p>Compile all files ending in .c and then run the program with "./hsh".
-This is how we enter our simple_shell </p>
+- The shells we implemented will be similar to, but simpler than, the one you run every day in Unix. You can find out which shell you are running by typing "echo $SHELL" at a prompt. You may then wish to look at the man pages for 'csh' or the shell you are running (more likely tcsh, or bash, or for those few wacky ones in the crowd, zsh or ksh) to learn more about all of the functionality that can be present. For this project, you do not need to implement too much functionality because its just a simple shell.
 
-<img src= "https://user-images.githubusercontent.com/55164863/79722679-1a914280-82aa-11ea-9649-f08884760b9f.PNG " style=" width:100px ; height:100px " />
+## Program Specification
 
-<p>Now if we can work on it by typing commands like our example shown below : " /bin/ls " </p>
+## Basic Shell
 
-<img src="https://user-images.githubusercontent.com/55164863/79726762-eec58b00-82b0-11ea-8adb-77959e96791b.PNG " style=" width:100px ; height:100px " />
-<hr>
-<h3>Authors</h3>
+#### Simple shell 0.1
 
-<li> Diego Gomez - <a href="https://github.com/ikki2530">ikki2530</a></li>
-<li> Ricardo Barrreto - <a href="https://github.com/RicardoBarretoR">RicardoBarretoR</a></li>
+- Write a UNIX command line interpreter.
+
+	- Usage: simple-shell
+	- Your Shell should:
+
+	- Display a prompt and wait for the user to type a command. A command line always ends with a new line.
+	- The prompt is displayed again each time a command has been executed.
+	- The command lines are simple, no semicolons, no pipes, no redirections or any other advanced features.
+	- The command lines are made only of one word. No arguments will be passed to programs.
+	- If an executable cannot be found, print an error message and display the prompt again.
+	- Handle errors.
+	- You have to handle the “end of file” condition (Ctrl+D)
+	- You don’t have to:
+	- use the PATH
+	- implement built-ins
+	- handle special characters : `", ', , \, *, &, #`
+	- be able to move the cursor
+	- handle commands with arguments
+
+#### Simple shell 0.2
+
+- Simple shell 0.1 +
+
+	- Handle command lines with arguments
+
+#### Simple shell 0.3
+
+- Simple shell 0.2 +
+
+	- Handle the PATH
+	- fork must not be called if the command doesn’t exist
+
+#### Simple shell 0.4
+
+- Simple shell 0.3 +
+
+	- Implement the exit built-in, that exits the shell
+	- Usage: exit
+	- You don’t have to handle any argument to the built-in exit
+####  Simple shell 1.0
+
+- Simple shell 0.4 +
+
+	- Implement the env built-in, that prints the current environment
+#### Simple shell 0.1.1
+
+- Simple shell 0.1 +
+
+	- Write your own getline function
+	- Use a buffer to read many chars at once and call the least possible the read system call
+	- You will need to use static variables
+	- You are not allowed to use getline
+- You don’t have to:
+
+	- be able to move the cursor
+#### Simple shell 0.2.1
+
+- Simple shell 0.2 +
+
+	- You are not allowed to use strtok
+#### Simple shell 0.4.1
+
+- Simple shell 0.4 +
+
+	- handle arguments for the built-in exit
+	- Usage: exit status, where status is an integer used to exit the shell
+#### `setenv, unsetenv`
+
+- Simple shell 1.0 +
+
+- Implement the setenv and unsetenv builtin commands
+
+`setenv`
+	- Initialize a new environment variable, or modify an existing one
+	- Command syntax: `setenv` VARIABLE VALUE
+	- Should print something on stderr on failure
+`unsetenv`
+	- Remove an environment variable
+	- Command syntax: `unsetenv` VARIABLE
+	- Should print something on stderr on failure
+#### `cd`
+- Simple shell 1.0 +
+
+	- Implement the builtin command `cd`:
+
+	- Changes the current directory of the process.
+	- Command syntax: `cd [DIRECTORY]`
+	- If no argument is given to cd the command must be interpreted like `cd $HOME`
+	- You have to handle the command `cd -`
+	- You have to update the environment variable `PWD` when you change directory
+	`man chdir`, `man getcwd`
+#### Handler of this separator `;`
+
+- Simple shell 1.0 +
+
+	- Handle the commands separator `;`
+#### `&& and ||`
+
+- Simple shell 1.0 +
+
+	- Handle the` &&` and `||` shell logical operators
+#### `alias`
+
+- Simple shell 1.0 +
+
+	- Implement the alias builtin command
+	- Usage: `alias [name[='value'] ...]`
+	- alias: Prints a list of all aliases, one per line, in the form name='value'
+	- alias name [name2 ...]: Prints the aliases name, name2, etc 1 per line, in the form name='value'
+	- alias name='value' [...]: Defines an alias for each name whose value is given. If name is already an alias, replaces its value with value
+#### `Comments`
+
+- Simple shell 1.0 +
+
+	- Handle comments (`#`)
+#### File as input
+
+- Simple shell 1.0 +
+
+	- Usage: simple_shell [filename]
+	- Your shell can take a file as a command line argument
+	- The file contains all the commands that your shell should run before exiting
+	- The file should contain one command per line
+	- In this mode, the shell should not print a prompt and should not read from stdin
+
+----
+
+<div align="center">
+  <img src="https://lh3.googleusercontent.com/vH1HTHhq7BIEuhIDuEc2Wrc2LgZigsJEWDR56ALuDFRZv9-jqCgHNHuBHIB-fLrrbwp7tJ8b7qeIJo0VtHUh=s0" alt="ALX logo">
+</div)

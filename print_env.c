@@ -1,23 +1,18 @@
-#include "shell.h"
+#include "simpleshell.h"
+
 /**
- * print_env - prints the current environment
- * Return: status
+ * _printenv - function that prints environ
+ * @s: array of strings
+ * Return: array of strings
  */
-int print_env(void)
+void _printenv(char *s)
 {
-	int j = 0, i = 0;
+	int i = 0;
 
-	while (environ[i] != NULL)
+	while (s)
 	{
-		j = 0;
-		while (environ[i][j] != '\0')
-		{
-			_putchar(environ[i][j]);
-			j++;
-		}
-		_putchar('\n');
-		i++;
+		write(1, s, _strlen(s));
+		write(1, "\n", 1);
+		s =  __environ[++i];
 	}
-
-	return (0);
 }
